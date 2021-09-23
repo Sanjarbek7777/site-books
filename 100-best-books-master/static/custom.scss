@@ -1,0 +1,131 @@
+// import fonts
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700");
+
+// import variables to build bootstrap theme
+@import 'variables';
+@import 'lib/bootstrap-sass/assets/stylesheets/bootstrap';
+
+@import 'about';
+
+body {
+  background-color: transparent;
+  margin-top: 100px;
+}
+
+.alert {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.home {
+  background: url('/static/library-dark-50c.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+
+  body {
+    color: white;
+  }
+  .row {
+    margin-top: 60px;
+  }
+  h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+  .social-buttons {
+    margin-top: 30px;
+  }
+  .back-to-home {
+    margin-top: 50px;
+    color: white;
+    font-size: 14px;
+    display: inline-block;
+  }
+  .fb_iframe_widget {
+    display: inline-block;
+    transform: scale(1.4);
+    margin-top: 15px;
+  }
+}
+
+strong {
+  font-weight: 400;
+}
+
+.row {
+  margin-bottom: 45px;
+  margin-top: 30px;
+}
+
+.btn-space {
+  margin: 0 1px 4px 0;
+}
+
+// Navbar transparency mecanism
+
+.navbar {
+  transition: background .3s;
+}
+
+.navbar-visible {
+  // if the navbar is visible than the transparency must be overwritten
+  .navbar-transparent {
+    background-color: $brand-primary;
+  }
+}
+
+.navbar-transparent {
+  background-color: transparent;
+}
+
+// navbar and brand logo
+
+a.navbar-brand {
+  padding-top: 18px;
+  text-decoration: none;
+}
+
+.navbar-brand > img {
+  width: 60px;
+  display: inline-block;
+}
+
+a.navbar-brand .logo-text {
+  font-size: 30px;
+  top: 6px;
+  position: relative;
+  left: 12px;
+  color: white;
+  font-weight: 100;
+}
+
+.book-item {
+  padding: 15px;
+}
+
+.card {
+  border: 1px solid $brand-info;
+  display: table;
+  vertical-align: middle;
+  width: 100%;
+  height: 450px;
+
+  .title {
+    margin-bottom: 18px;
+  }
+
+  .cover {
+    height: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home h1 {
+    font-size: 40px;
+  }
+  a.navbar-brand .logo-text {
+    font-size: 22px;
+  }
+}

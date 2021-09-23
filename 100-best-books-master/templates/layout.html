@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="{% if home == True %}home{% endif %}" lang="en">
+  <head>
+    <title>The 100 Best Books of all time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    {% if number_of_days_to_end and number_of_days_to_end > 0 %}
+      <meta property="og:title" content="It would take me {{ number_of_days_to_end }} days to read the 100 Best Books of all time. You want to know for you too!!"/>
+    {% else %}
+      <meta property="og:title" content="How long would it take you to read the 100 Best Books of all time?"/>
+    {% endif %}
+
+    {% if number_of_days_to_end and number_of_days_to_end > 0 %}
+      <meta property="og:url" content="http://www.100bestbooks.xyz/days/{{ number_of_days_to_end }}" />
+    {% else %}
+      <meta property="og:url" content="http://www.100bestbooks.xyz" />
+    {% endif %}
+    <meta property="og:site_name" content="The 100 Best Books of all time"/>
+    <meta property="og:description" content="Find out how long would it take you to read the 100 Best Books of all time. This list is composed of the 100 Best Books of all time defined by the Bokklubben library. It contains books from every period of times and various nationalities." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://www.100bestbooks.xyz{{ url_for('static', filename='library-dark-0.jpg') }}" />
+    <meta property="og:locale" content="en_US" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    {% if config['ENVIRONMENT'] == 'development' %}
+      {% assets "scss_all" %}
+        <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+      {% endassets %}
+      {% assets "js_all" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+      {% endassets %}
+    {% else %}
+      <link rel=stylesheet type=text/css href="/static/stylesheets.css">
+      <script type="text/javascript" src="/static/javascripts.js"></script>
+    {% endif %}
+  </head>
+  <body class="{% if home != True %}navbar-visible{% endif %}">
+    {% include 'facebook.script.html' %}
+    {% include 'nav.html' %}
+
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} fade in alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}
+      {% endblock %}
+    </div>
+    {% include 'tweeter.script.html' %}
+    {% include 'analytics.script.html' %}
+  </body>
+</html>

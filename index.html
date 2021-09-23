@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books library</title>
+  <link rel="stylesheet" href="./css/bootstrap5.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="body">
+
+  <div class="">
+    <div class="site-hero">
+      <div class="d-flex align-items-center justify-content-center">
+        <img src="./img/menu_book_black.svg.svg" alt="books" width="40" height="40">
+        <h1 class="text-center p-2 text-white m-0">Online Books</h1>
+      </div>
+      <div class="container">
+        <!-- <div class="text-center">
+          <h2 class="text-white">Search book</h2>
+        </div> -->
+        <form class="js-search-form d-flex align-items-center justify-content-between search-form" action="https://echo.htmlacademy.ru" method="GET">
+          <input class="js-name-input form-control me-2" type="text" aria-label="search book" placeholder="Book name">
+          <input class="js-year-input form-control me-2" type="number" aria-label="book year" placeholder="Book year">
+          <input class="js-country-input form-control me-2" type="text" aria-label="country" placeholder="Country">
+          <input class="js-language-input form-control me-2" type="text" aria-label="country" placeholder="Language">
+          <select class="js-sort-input form-control me-2" name="sort by">
+            <option value="Sort" selected disabled>Sort by</option>
+            <option value="year">Year</option>
+            <option value="az">A-Z</option>
+            <option value="pages">Pages</option>
+          </select>
+          <button class="btn btn-info text-white">Find</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-xxl">
+    <div class="books books__list d-flex flex-wrap mt-4 justify-content-between">
+      <!-- <div class="books__item border p-2 col-3">
+        <img class="img" src="https://picsum.photos/850?" alt="image book" width="150" height="300">
+        <p class="fs-6 m-0 mt-2 text-success">Title: <span class="fs-5 book__title text-info">Ikki eshik orasi</span></p>
+        <p class="fs-6 m-0 text-success">Author: <span class="fs-5 book__author text-info">O'tkir Hoshimov</span></p>
+        <p class="fs-6 m-0 text-success">Year: <span class="fs-5 text-info">1990</span></p>
+        <p class="fs-6 m-0 text-success">Pages: <span class="fs-5 text-info">222</span></p>
+        <p class="fs-6 m-0 text-success">Language: <span class="fs-5 text-info">English</span></p>
+        <div class="d-flex align-items-center mt-2">
+          <a class="btn btn-outline-warning me-4" href="#">Wikipedia</a>
+          <button class="btn btn-outline-warning">Bookmark</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+
+  <template id="books-item-template">
+    <div class="books__item border p-2 col-sm-6 col-md-3 mb-3" style="width: 300px;">
+      <img class="book__img img" src="" alt="image book" height="400">
+      <p class="fs-6 m-0 mt-2 text-truncate"style="width: 250px;">Title: <span class="fs-5 book__title">Ikki eshik orasi</span></p>
+      <p class="fs-6 m-0">Author: <span class="fs-5 book__author">O'tkir Hoshimov</span></p>
+      <div class="d-flex">
+        <p class="fs-6 m-0 me-3">Year: <span class="fs-5 book__year">1990</span></p>
+        <p class="fs-6 m-0">Pages: <span class="fs-5 book__page">222</span></p>
+      </div>
+      <p class="fs-6 m-0">Language: <span class="fs-5 book__language">English</span></p>
+      <div class="d-flex align-items-center mt-2">
+        <a class="btn btn-outline-info me-4 book__link" href="#">Wikipedia</a>
+        <button class="btn btn-outline-success">Bookmark</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="js/bootstrap5.bundle.min.js"></script>
+  <script src="js/books.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

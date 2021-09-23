@@ -1,0 +1,14 @@
+.img {
+  width: 100%;
+}
+
+.site-hero {
+  height: 400px;
+  background-image: url(../100-best-books-master/static/library-dark-50c.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.search-form {
+  margin-top: 270px;
+}

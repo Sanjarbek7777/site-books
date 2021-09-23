@@ -1,0 +1,5 @@
+/static/.webassets-cache/*
+settings.py
+/static/lib/*
+*.pyc
+lib/*
