@@ -1,6 +1,7 @@
 .body {
-  background-image: url(../img/body-second-bg-image.jpg);
-  background-size: 500px;
+  /* background-image: url(../img/body-second-bg-image.jpg);
+  background-size: 500px; */
+  background-color: rgba(252, 250, 153, 0.5);
 }
 
 .img {
@@ -9,7 +10,7 @@
 
 .site-hero {
   height: 250px;
-  background-image: url(../100-best-books-master/static/library-dark-50c.jpg);
+  background-image: url(../100-best-books-master/static/library-bright.jpg);
   background-repeat: no-repeat;
   background-position: center;
 }
