@@ -4,8 +4,6 @@ var elBooksItemTemplate = document.querySelector('#books-item-template').content
 const elSearchForm = document.querySelector('.js-search-form');
 const elFormNameInput = elSearchForm.querySelector('.js-name-input');
 const elFormYearInput = elSearchForm.querySelector('.js-year-input');
-const elFormCountryInput = elSearchForm.querySelector('.js-country-input');
-const elFormLanguageInput = elSearchForm.querySelector('.js-language-input');
 const elFormSortInput = elSearchForm.querySelector('.js-sort-input');
 
 function showBooks (books) {
@@ -21,6 +19,7 @@ function showBooks (books) {
     elNewBooksItem.querySelector('.book__year').textContent = book.year;
     elNewBooksItem.querySelector('.book__page').textContent = book.pages;
     elNewBooksItem.querySelector('.book__language').textContent = book.language;
+    elNewBooksItem.querySelector('.book__country').textContent = book.country;
     elNewBooksItem.querySelector('.book__link').href = book.link;
 
     elBooksFragment.appendChild(elNewBooksItem);

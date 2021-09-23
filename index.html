@@ -23,8 +23,12 @@
         <form class="js-search-form d-flex align-items-center justify-content-between search-form" action="https://echo.htmlacademy.ru" method="GET">
           <input class="js-name-input form-control me-2" type="text" aria-label="search book" placeholder="Book name">
           <input class="js-year-input form-control me-2" type="number" aria-label="book year" placeholder="Book year">
-          <input class="js-country-input form-control me-2" type="text" aria-label="country" placeholder="Country">
-          <input class="js-language-input form-control me-2" type="text" aria-label="country" placeholder="Language">
+          <select class="js-country-input form-control me-2" name="country">
+            <option value="all" selected disabled>Country</option>
+          </select>
+          <select class="js-language-input form-control me-2" name="country">
+            <option value="all" selected disabled>Language</option>
+          </select>
           <select class="js-sort-input form-control me-2" name="sort by">
             <option value="Sort" selected disabled>Sort by</option>
             <option value="year">Year</option>
@@ -56,17 +60,34 @@
 
 
   <template id="books-item-template">
-    <div class="books__item border p-2 col-sm-6 col-md-3 mb-3" style="width: 300px;">
-      <img class="book__img img" src="" alt="image book" height="400">
-      <p class="fs-6 m-0 mt-2 text-truncate"style="width: 250px;">Title: <span class="fs-5 book__title">Ikki eshik orasi</span></p>
-      <p class="fs-6 m-0">Author: <span class="fs-5 book__author">O'tkir Hoshimov</span></p>
+    <div class="books__item border p-2 col-sm-6 col-md-3 mb-3 rounded bg-white" style="width: 300px;">
+      <img class="book__img img mb-2" src="" alt="image book" height="400">
+     <div class="d-flex flex-column mb-2">
+      <span class="fs-4 book__title text-truncate fst-italic text-danger" style="width: 250px;">Ikki eshik orasi</span>
+      <span class="fs-5 book__author fst-italic">O'tkir Hoshimov</span>
+     </div>
       <div class="d-flex">
-        <p class="fs-6 m-0 me-3">Year: <span class="fs-5 book__year">1990</span></p>
-        <p class="fs-6 m-0">Pages: <span class="fs-5 book__page">222</span></p>
+        <div class="d-flex align-items-center me-5">
+          <img class="me-1" src="./img/language.svg" alt="icon language" width="15" height="15">
+          <span class="book__language">Uzbek</span>
+        </div>
+        <div class="d-flex align-items-center">
+          <img class="me-1" src="./img/country.svg" alt="icon country" width="17" height="17">
+          <span class="book__country text-truncate" style="width: 100px">Uzbekistan</span>
+        </div>
       </div>
-      <p class="fs-6 m-0">Language: <span class="fs-5 book__language">English</span></p>
-      <div class="d-flex align-items-center mt-2">
-        <a class="btn btn-outline-info me-4 book__link" href="#">Wikipedia</a>
+      <div class="d-flex">
+        <div class="d-flex align-items-center me-5">
+          <img class="me-1" src="./img/calendar.svg" alt="icon calendar" width="15" height="15">
+          <span class="book__year">1990</span>
+        </div>
+        <div class="d-flex align-items-center ms-3">
+          <img class="me-1" src="./img/pages.svg" alt="icon pages" width="16" height="16">
+          <span class="book__page">222</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center mt-2 justify-content-between">
+        <a class="btn btn-outline-info book__link" href="#">Wikipedia</a>
         <button class="btn btn-outline-success">Bookmark</button>
       </div>
     </div>

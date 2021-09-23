@@ -1,14 +1,19 @@
+.body {
+  background-image: url(../img/body-second-bg-image.jpg);
+  background-size: 500px;
+}
+
 .img {
   width: 100%;
 }
 
 .site-hero {
-  height: 400px;
+  height: 250px;
   background-image: url(../100-best-books-master/static/library-dark-50c.jpg);
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .search-form {
-  margin-top: 270px;
+  margin-top: 120px;
 }
