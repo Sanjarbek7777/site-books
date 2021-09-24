@@ -1,9 +1,13 @@
+const countries = [];
+
 var elBooksList = document.querySelector('.books');
 var elBooksItemTemplate = document.querySelector('#books-item-template').content;
 
 const elSearchForm = document.querySelector('.js-search-form');
 const elFormNameInput = elSearchForm.querySelector('.js-name-input');
 const elFormYearInput = elSearchForm.querySelector('.js-year-input');
+const elFormCountryInput = elSearchForm.querySelector('.js-country-input');
+const elFormLanguageInput = elSearchForm.querySelector('.js-language-input');
 const elFormSortInput = elSearchForm.querySelector('.js-sort-input');
 
 function showBooks (books) {
@@ -21,6 +25,7 @@ function showBooks (books) {
     elNewBooksItem.querySelector('.book__language').textContent = book.language;
     elNewBooksItem.querySelector('.book__country').textContent = book.country;
     elNewBooksItem.querySelector('.book__link').href = book.link;
+    elNewBooksItem.querySelector('.book__link').target = '_blank';
 
     elBooksFragment.appendChild(elNewBooksItem);
   }
@@ -28,31 +33,41 @@ function showBooks (books) {
   elBooksList.appendChild(elBooksFragment);
 }
 
-function findBooks (titleRegex) {
-  for (book of books) {
-    if (elFormNameInput.value === book.title) {
-      return book.title;
-    }
-  }
+function findBook(titleRegex) {
+ return books.filter(book => {
+  const criteir = book.title.match(titleRegex) && book.year === Number(elFormYearInput.value);
+  return criteir;
+ });
 }
 
-function onBookSearch (evt) {
+function bookFind (evt) {
   evt.preventDefault();
 
-  const titleRegex = new RegExp(elFormNameInput, 'gi');
-  const foundBooks = findBooks(titleRegex);
+  const titleRegex = new RegExp (elFormNameInput.value.trim(), 'gi');
+  const foundBooks = findBook(titleRegex);
 
-  if(foundBooks.length > 0) {
-    showBooks(foundBooks);
+  if (foundBooks.length > 0) {
+    showBooks(foundBooks, titleRegex);
   } else {
-    elBooksList.innerHTML = '<div class="col-12 text-center">Book not found</div>';
+    elBooksList.innerHTML = '<div class="col-12 text-center">Book not found</div>'
   }
 }
 
-if(elSearchForm) {
-  elSearchForm.addEventListener('submit', onBookSearch);
+if (elSearchForm) {
+  elSearchForm.addEventListener('submit', bookFind)
 }
 
+
+function showCountryOption() {
+  const elCountriesFragment = document.createDocumentFragment();
+  countries.forEach(country => {
+    const elCountryOption = document.createElement('option');
+    elCountryOption.textContent = country;
+    elCountryOption.value = country;
+    elCountriesFragment.appendChild(elCountryOption);
+  });
+  elFormCountryInput.appendChild(elCountriesFragment);
+}
 
 showBooks(books);
 

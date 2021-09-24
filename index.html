@@ -24,15 +24,16 @@
           <input class="js-name-input form-control me-2" type="text" aria-label="search book" placeholder="Book name">
           <input class="js-year-input form-control me-2" type="number" aria-label="book year" placeholder="Book year">
           <select class="js-country-input form-control me-2" name="country">
-            <option value="all" selected disabled>Country</option>
+            <option value="all" selected>Country</option>
           </select>
           <select class="js-language-input form-control me-2" name="country">
-            <option value="all" selected disabled>Language</option>
+            <option value="all" selected>Language</option>
           </select>
           <select class="js-sort-input form-control me-2" name="sort by">
             <option value="Sort" selected disabled>Sort by</option>
             <option value="year">Year</option>
-            <option value="az">A-Z</option>
+            <option value="a-z">A-Z</option>
+            <option value="z-a">Z-A</option>
             <option value="pages">Pages</option>
           </select>
           <button class="btn btn-info text-white">Find</button>
@@ -69,7 +70,7 @@
       <div class="d-flex">
         <div class="d-flex align-items-center me-5">
           <img class="me-1" src="./img/language.svg" alt="icon language" width="15" height="15">
-          <span class="book__language">Uzbek</span>
+          <span class="book__language text-truncate" style="width: 70px;">Uzbek</span>
         </div>
         <div class="d-flex align-items-center">
           <img class="me-1" src="./img/country.svg" alt="icon country" width="17" height="17">
@@ -77,18 +78,18 @@
         </div>
       </div>
       <div class="d-flex">
-        <div class="d-flex align-items-center me-5">
+        <div class="d-flex align-items-center me-3">
           <img class="me-1" src="./img/calendar.svg" alt="icon calendar" width="15" height="15">
-          <span class="book__year">1990</span>
+          <span class="book__year" style="width: 103px;">1990</span>
         </div>
-        <div class="d-flex align-items-center ms-3">
+        <div class="d-flex align-items-center">
           <img class="me-1" src="./img/pages.svg" alt="icon pages" width="16" height="16">
           <span class="book__page">222</span>
         </div>
       </div>
       <div class="d-flex align-items-center mt-2 justify-content-between">
         <a class="btn btn-outline-info book__link" href="#">Wikipedia</a>
-        <button class="btn btn-outline-success">Bookmark</button>
+        <button class="btn btn-outline-success book__btn">Bookmark</button>
       </div>
     </div>
   </template>
