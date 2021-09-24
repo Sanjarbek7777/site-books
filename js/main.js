@@ -1,4 +1,5 @@
-const countries = [];
+var countries = [];
+var languages = [];
 
 var elBooksList = document.querySelector('.books');
 var elBooksItemTemplate = document.querySelector('#books-item-template').content;
@@ -10,7 +11,7 @@ const elFormCountryInput = elSearchForm.querySelector('.js-country-input');
 const elFormLanguageInput = elSearchForm.querySelector('.js-language-input');
 const elFormSortInput = elSearchForm.querySelector('.js-sort-input');
 
-function showBooks (books) {
+function showBooks (books, titleRegex = '') {
   elBooksList.innerHTML = '';
   var elBooksFragment = document.createDocumentFragment();
 
@@ -18,7 +19,11 @@ function showBooks (books) {
     var elNewBooksItem = elBooksItemTemplate.cloneNode(true);
 
     elNewBooksItem.querySelector('.book__img').src = book.imageLink;
-    elNewBooksItem.querySelector('.book__title').textContent = book.title;
+    if (titleRegex.source !== '(?:)' && titleRegex) {
+      elNewBooksItem.querySelector('.book__title').innerHTML = book.title.replace(titleRegex, `<mark class="p-0" style="background-color: yellow;">${titleRegex.source}</mark>`);
+    } else {
+      elNewBooksItem.querySelector('.book__title').textContent = book.title;
+    }
     elNewBooksItem.querySelector('.book__author').textContent = book.author;
     elNewBooksItem.querySelector('.book__year').textContent = book.year;
     elNewBooksItem.querySelector('.book__page').textContent = book.pages;
@@ -35,8 +40,8 @@ function showBooks (books) {
 
 function findBook(titleRegex) {
  return books.filter(book => {
-  const criteir = book.title.match(titleRegex) && book.year === Number(elFormYearInput.value);
-  return criteir;
+  const findedBooks = book.title.match(titleRegex) && (elFormLanguageInput.value == book.language || elFormLanguageInput.value == 'all') && (elFormCountryInput.value == book.country || elFormCountryInput.value == 'all') && (Number(elFormYearInput.value) >= book.year || elFormYearInput.value == '');
+  return findedBooks;
  });
 }
 
@@ -47,6 +52,7 @@ function bookFind (evt) {
   const foundBooks = findBook(titleRegex);
 
   if (foundBooks.length > 0) {
+    sortBooks(foundBooks, elFormSortInput.value);
     showBooks(foundBooks, titleRegex);
   } else {
     elBooksList.innerHTML = '<div class="col-12 text-center">Book not found</div>'
@@ -58,16 +64,74 @@ if (elSearchForm) {
 }
 
 
-function showCountryOption() {
-  const elCountriesFragment = document.createDocumentFragment();
-  countries.forEach(country => {
-    const elCountryOption = document.createElement('option');
-    elCountryOption.textContent = country;
-    elCountryOption.value = country;
-    elCountriesFragment.appendChild(elCountryOption);
-  });
-  elFormCountryInput.appendChild(elCountriesFragment);
+
+
+function getLanguages() {
+
+  for (book of books) {
+    if (!languages.includes(book.language)) {
+      languages.push(book.language);
+    }
+  }
 }
 
+function appendLanguages() {
+
+  let languageFragment = document.createDocumentFragment();
+  for (const lan of languages) {
+    const elNewOption = document.createElement('option');
+    elNewOption.textContent = lan;
+    elNewOption.value = lan;
+    languageFragment.appendChild(elNewOption);
+  }
+  elFormLanguageInput.appendChild(languageFragment);
+}
+
+
+
+function getCountries() {
+  for (book of books) {
+    if (!countries.includes(book.country)) {
+      countries.push(book.country);
+    }
+  }
+}
+
+function appendCountires() {
+  let countryFragment = document.createDocumentFragment();
+
+  for (const con of countries) {
+    const elNewOption = document.createElement('option');
+    elNewOption.textContent = con;
+    elNewOption.value = con;
+    countryFragment.appendChild(elNewOption);
+  }
+  elFormCountryInput.appendChild(countryFragment);
+  }
+
+function sortBooks(books, sortType) {
+  if (sortType === 'az') {
+    books.sort((a, b) => {
+      if (a.title > b.title) return 1;
+      if (a.title < b.title) return -1;
+      return 0;
+    });
+  } else if (sortType === 'za') {
+    books.sort((a, b) => {
+      if (a.title < b.title) return 1;
+      if (a.title > b.title) return -1;
+      return 0;
+    });
+  } else if (sortType === 'year_old') {
+    books.sort((a, b) => a.year - b.year);
+  } else if (sortType === 'year_new') {
+    books.sort((a, b) => b.year - a.year);
+  }
+}
+
+getLanguages();
+appendLanguages();
+getCountries();
+appendCountires();
 showBooks(books);
 

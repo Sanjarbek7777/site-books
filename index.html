@@ -10,37 +10,41 @@
 </head>
 <body class="body">
 
-  <div class="">
     <div class="site-hero">
       <div class="d-flex align-items-center justify-content-center">
         <img src="./img/menu_book_black.svg.svg" alt="books" width="40" height="40">
         <h1 class="text-center p-2 text-white m-0">Online Books</h1>
       </div>
       <div class="container">
-        <!-- <div class="text-center">
-          <h2 class="text-white">Search book</h2>
-        </div> -->
-        <form class="js-search-form d-flex align-items-center justify-content-between search-form" action="https://echo.htmlacademy.ru" method="GET">
-          <input class="js-name-input form-control me-2" type="text" aria-label="search book" placeholder="Book name">
-          <input class="js-year-input form-control me-2" type="number" aria-label="book year" placeholder="Book year">
-          <select class="js-country-input form-control me-2" name="country">
-            <option value="all" selected>Country</option>
-          </select>
-          <select class="js-language-input form-control me-2" name="country">
-            <option value="all" selected>Language</option>
-          </select>
-          <select class="js-sort-input form-control me-2" name="sort by">
-            <option value="Sort" selected disabled>Sort by</option>
-            <option value="year">Year</option>
-            <option value="a-z">A-Z</option>
-            <option value="z-a">Z-A</option>
-            <option value="pages">Pages</option>
-          </select>
-          <button class="btn btn-info text-white">Find</button>
+        <form class="js-search-form align-items-center justify-content-between search-form" action="https://echo.htmlacademy.ru" method="GET">
+          <div>
+            <div class="text-center"><h3 class="text-white">Search book</h3></div>
+            <div class="d-flex mb-2">
+              <input class="js-name-input form-control rounded-pill me-2" type="text" aria-label="search book" placeholder="Book name">
+              <input class="js-year-input form-control rounded-pill" type="number" aria-label="book year" placeholder="Book year">
+            </div>
+            <div class="d-flex mb-2">
+              <select class="js-country-input form-control rounded-pill me-2" name="country">
+                <option value="all" selected>Country</option>
+              </select>
+              <select class="js-language-input form-control rounded-pill" name="country">
+                <option value="all" selected>Language</option>
+              </select>
+            </div>
+            <div class="d-flex">
+              <select class="js-sort-input form-control rounded-pill me-2" name="sort by">
+                <option value="Sort" selected>Sort by</option>
+                <option value="year_old">Year(old-new)</option>
+                <option value="year_new">Year(new-old)</option>
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+              </select>
+              <button class="btn btn-info text-white form-control rounded-pill">Get results</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
-  </div>
 
   <div class="container-xxl">
     <div class="books books__list d-flex flex-wrap mt-4 justify-content-between">
@@ -61,37 +65,39 @@
 
 
   <template id="books-item-template">
-    <div class="books__item border p-2 col-sm-6 col-md-3 mb-3 rounded bg-white" style="width: 300px;">
-      <img class="book__img img mb-2" src="" alt="image book" height="400">
-     <div class="d-flex flex-column mb-2">
-      <span class="fs-4 book__title text-truncate fst-italic text-danger" style="width: 250px;">Ikki eshik orasi</span>
-      <span class="fs-5 book__author fst-italic">O'tkir Hoshimov</span>
-     </div>
-      <div class="d-flex">
-        <div class="d-flex align-items-center me-5">
-          <img class="me-1" src="./img/language.svg" alt="icon language" width="15" height="15">
-          <span class="book__language text-truncate" style="width: 70px;">Uzbek</span>
+      <div class="books__item border flex-grow-1 p-3 mb-2 me-3 rounded bg-white" style="width: 300px;">
+        <img class="book__img img mb-2" src="" alt="image book" height="400">
+       <div class="d-flex flex-column mb-2">
+        <span class="fs-4 book__title text-truncate fst-italic text-danger" style="width: 250px;">Ikki eshik orasi</span>
+        <span class="fs-5 book__author fst-italic">O'tkir Hoshimov</span>
+       </div>
+        <div class="d-flex">
+          <div class="d-flex align-items-center me-5">
+            <img class="me-1" src="./img/language.svg" alt="icon language" width="15" height="15">
+            <span class="book__language text-truncate" style="width: 70px;">Uzbek</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="me-1" src="./img/country.svg" alt="icon country" width="17" height="17">
+            <span class="book__country text-truncate" style="width: 100px">Uzbekistan</span>
+          </div>
         </div>
-        <div class="d-flex align-items-center">
-          <img class="me-1" src="./img/country.svg" alt="icon country" width="17" height="17">
-          <span class="book__country text-truncate" style="width: 100px">Uzbekistan</span>
+        <div class="d-flex">
+          <div class="d-flex align-items-center me-3">
+            <img class="me-1" src="./img/calendar.svg" alt="icon calendar" width="15" height="15">
+            <span class="book__year" style="width: 103px;">1990</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="me-1" src="./img/pages.svg" alt="icon pages" width="16" height="16">
+            <span class="book__page">222</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center mt-2 justify-content-between">
+          <a class="btn btn-outline-info book__link d-flex align-items-center" href="#">Wikipedia
+            <img class="ms-1 mt-1" src="./img/wikipedia-icon.png" alt="icon wikipedia" width="15" height="15">
+          </a>
+          <button class="btn btn-outline-success book__btn">Bookmark</button>
         </div>
       </div>
-      <div class="d-flex">
-        <div class="d-flex align-items-center me-3">
-          <img class="me-1" src="./img/calendar.svg" alt="icon calendar" width="15" height="15">
-          <span class="book__year" style="width: 103px;">1990</span>
-        </div>
-        <div class="d-flex align-items-center">
-          <img class="me-1" src="./img/pages.svg" alt="icon pages" width="16" height="16">
-          <span class="book__page">222</span>
-        </div>
-      </div>
-      <div class="d-flex align-items-center mt-2 justify-content-between">
-        <a class="btn btn-outline-info book__link" href="#">Wikipedia</a>
-        <button class="btn btn-outline-success book__btn">Bookmark</button>
-      </div>
-    </div>
   </template>
 
   <script src="js/bootstrap5.bundle.min.js"></script>
