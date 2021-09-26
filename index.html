@@ -10,29 +10,35 @@
 </head>
 <body class="body">
 
-    <div class="site-hero">
-      <div class="d-flex align-items-center justify-content-center">
-        <img src="./img/menu_book_black.svg.svg" alt="books" width="40" height="40">
-        <h1 class="text-center p-2 text-white m-0">Online Books</h1>
+    <header class="site-hero">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center mx-auto">
+          <img src="./img/menu_book_black.svg.svg" alt="books" width="40" height="40">
+          <h1 class="text-center p-2 text-white m-0">Online Books</h1>
+        </div>
+        <button class="btn btn-info me-3 p-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="./img/bookmarks_black.svg" alt="show bookmarks btn" width="30" height="30">
+        </button>
       </div>
       <div class="container">
         <form class="js-search-form align-items-center justify-content-between search-form" action="https://echo.htmlacademy.ru" method="GET">
           <div>
             <div class="text-center"><h3 class="text-white">Search book</h3></div>
             <div class="d-flex mb-2">
-              <input class="js-name-input form-control rounded-pill me-2" type="text" aria-label="search book" placeholder="Book name">
-              <input class="js-year-input form-control rounded-pill" type="number" aria-label="book year" placeholder="Book year">
+              <input class="js-name-input form-control rounded-pill me-2" type="text" name="input_book_name" aria-label="search book" placeholder="Book name">
+              <input class="js-year-input form-control rounded-pill" type="number" name="input_book_year" aria-label="book year" placeholder="Start year">
             </div>
             <div class="d-flex mb-2">
               <select class="js-country-input form-control rounded-pill me-2" name="country">
-                <option value="all" selected>Country</option>
+                <option value="all" selected>All countries</option>
               </select>
-              <select class="js-language-input form-control rounded-pill" name="country">
-                <option value="all" selected>Language</option>
+              <select class="js-language-input form-control rounded-pill" name="language">
+                <option value="all" selected>
+                 All languages</option>
               </select>
             </div>
             <div class="d-flex">
-              <select class="js-sort-input form-control rounded-pill me-2" name="sort by">
+              <select class="js-sort-input form-control rounded-pill me-2" name="sorting">
                 <option value="Sort" selected>Sort by</option>
                 <option value="year_old">Year(old-new)</option>
                 <option value="year_new">Year(new-old)</option>
@@ -44,60 +50,79 @@
           </div>
         </form>
       </div>
-    </div>
+    </header>
 
-  <div class="container-xxl">
-    <div class="books books__list d-flex flex-wrap mt-4 justify-content-between">
-      <!-- <div class="books__item border p-2 col-3">
-        <img class="img" src="https://picsum.photos/850?" alt="image book" width="150" height="300">
-        <p class="fs-6 m-0 mt-2 text-success">Title: <span class="fs-5 book__title text-info">Ikki eshik orasi</span></p>
-        <p class="fs-6 m-0 text-success">Author: <span class="fs-5 book__author text-info">O'tkir Hoshimov</span></p>
-        <p class="fs-6 m-0 text-success">Year: <span class="fs-5 text-info">1990</span></p>
-        <p class="fs-6 m-0 text-success">Pages: <span class="fs-5 text-info">222</span></p>
-        <p class="fs-6 m-0 text-success">Language: <span class="fs-5 text-info">English</span></p>
-        <div class="d-flex align-items-center mt-2">
-          <a class="btn btn-outline-warning me-4" href="#">Wikipedia</a>
-          <button class="btn btn-outline-warning">Bookmark</button>
+    <main class="site-main">
+      <div class="container-xxl">
+        <div class="books books__list d-flex flex-wrap mt-4 justify-content-between">
+
         </div>
-      </div> -->
+      </div>
+    </main>
+
+
+    <!-- MODALS -->
+<div class="bookmarks-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bookmarked books</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="bookmarks__list list-unstyled"></ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
+</div>
 
 
+    <!-- TEMPLATES -->
   <template id="books-item-template">
-      <div class="books__item border flex-grow-1 p-3 mb-2 me-3 rounded bg-white" style="width: 300px;">
-        <img class="book__img img mb-2" src="" alt="image book" height="400">
+      <div class="books__item card_book border flex-grow-1 p-3 mb-2 me-3 rounded bg-white">
+        <img class="book__img img mb-2" src="" alt="image book">
        <div class="d-flex flex-column mb-2">
-        <span class="fs-4 book__title text-truncate fst-italic text-danger" style="width: 250px;">Ikki eshik orasi</span>
-        <span class="fs-5 book__author fst-italic">O'tkir Hoshimov</span>
+        <span class="fs-3 book__title title text-truncate fst-italic text-danger"></span>
+        <span class="fs-6 book__author fst-italic"></span>
        </div>
         <div class="d-flex">
           <div class="d-flex align-items-center me-5">
-            <img class="me-1" src="./img/language.svg" alt="icon language" width="15" height="15">
-            <span class="book__language text-truncate" style="width: 70px;">Uzbek</span>
+            <img class="me-1" src="./img/language.svg" alt="" width="15" height="15">
+            <span class="book__language language text-truncate"></span>
           </div>
           <div class="d-flex align-items-center">
-            <img class="me-1" src="./img/country.svg" alt="icon country" width="17" height="17">
-            <span class="book__country text-truncate" style="width: 100px">Uzbekistan</span>
+            <img class="me-1" src="./img/country.svg" alt="" width="17" height="17">
+            <span class="book__country country text-truncate"></span>
           </div>
         </div>
         <div class="d-flex">
           <div class="d-flex align-items-center me-3">
-            <img class="me-1" src="./img/calendar.svg" alt="icon calendar" width="15" height="15">
-            <span class="book__year" style="width: 103px;">1990</span>
+            <img class="me-1" src="./img/calendar.svg" alt="" width="15" height="15">
+            <span class="book__year year"></span>
           </div>
           <div class="d-flex align-items-center">
-            <img class="me-1" src="./img/pages.svg" alt="icon pages" width="16" height="16">
-            <span class="book__page">222</span>
+            <img class="me-1" src="./img/pages.svg" alt="" width="16" height="16">
+            <span class="book__page"></span>
           </div>
         </div>
         <div class="d-flex align-items-center mt-2 justify-content-between">
           <a class="btn btn-outline-info book__link d-flex align-items-center" href="#">Wikipedia
-            <img class="ms-1 mt-1" src="./img/wikipedia-icon.png" alt="icon wikipedia" width="15" height="15">
+            <img class="ms-1 mt-1" src="./img/wikipedia-icon.png" alt="" width="15" height="15">
           </a>
-          <button class="btn btn-outline-success book__btn">Bookmark</button>
+          <button class="js-bookmark-button btn btn-outline-success book__btn" type="submit">Bookmark</button>
         </div>
       </div>
+  </template>
+
+  <template id="bookmarks__template">
+    <div class="bookmarks__item item__bookmarks mb-2 d-flex align-items-center justify-content-center">
+      <a class="js-bookmarks-link text-decoration-none text-dark" href="#"></a>
+      <p class="js-bookmarks-year m-0 text-truncate me-2"></p>
+      <button class="js-bookmarks-close btn btn-danger">x</button>
+    </div>
   </template>
 
   <script src="js/bootstrap5.bundle.min.js"></script>

@@ -1,9 +1,20 @@
 var countries = [];
 var languages = [];
+var bookmarkList = [];
 
 var elBooksList = document.querySelector('.books');
 var elBooksItemTemplate = document.querySelector('#books-item-template').content;
+var elBookmarksTemplate = document.querySelector('#bookmarks__template').content;
 
+
+// BOOKMARK
+var elBookmarksModal = document.querySelector('.bookmarks-modal');
+var elBookmarksList = elBookmarksModal.querySelector('.bookmarks__list');
+var elWatchlistFragment = document.createDocumentFragment();
+
+
+
+// FORM
 const elSearchForm = document.querySelector('.js-search-form');
 const elFormNameInput = elSearchForm.querySelector('.js-name-input');
 const elFormYearInput = elSearchForm.querySelector('.js-year-input');
@@ -38,34 +49,6 @@ function showBooks (books, titleRegex = '') {
   elBooksList.appendChild(elBooksFragment);
 }
 
-function findBook(titleRegex) {
- return books.filter(book => {
-  const findedBooks = book.title.match(titleRegex) && (elFormLanguageInput.value == book.language || elFormLanguageInput.value == 'all') && (elFormCountryInput.value == book.country || elFormCountryInput.value == 'all') && (Number(elFormYearInput.value) >= book.year || elFormYearInput.value == '');
-  return findedBooks;
- });
-}
-
-function bookFind (evt) {
-  evt.preventDefault();
-
-  const titleRegex = new RegExp (elFormNameInput.value.trim(), 'gi');
-  const foundBooks = findBook(titleRegex);
-
-  if (foundBooks.length > 0) {
-    sortBooks(foundBooks, elFormSortInput.value);
-    showBooks(foundBooks, titleRegex);
-  } else {
-    elBooksList.innerHTML = '<div class="col-12 text-center">Book not found</div>'
-  }
-}
-
-if (elSearchForm) {
-  elSearchForm.addEventListener('submit', bookFind)
-}
-
-
-
-
 function getLanguages() {
 
   for (book of books) {
@@ -78,10 +61,10 @@ function getLanguages() {
 function appendLanguages() {
 
   let languageFragment = document.createDocumentFragment();
-  for (const lan of languages) {
+  for (const language of languages) {
     const elNewOption = document.createElement('option');
-    elNewOption.textContent = lan;
-    elNewOption.value = lan;
+    elNewOption.textContent = language;
+    elNewOption.value = language;
     languageFragment.appendChild(elNewOption);
   }
   elFormLanguageInput.appendChild(languageFragment);
@@ -100,10 +83,10 @@ function getCountries() {
 function appendCountires() {
   let countryFragment = document.createDocumentFragment();
 
-  for (const con of countries) {
+  for (const country of countries) {
     const elNewOption = document.createElement('option');
-    elNewOption.textContent = con;
-    elNewOption.value = con;
+    elNewOption.textContent = country;
+    elNewOption.value = country;
     countryFragment.appendChild(elNewOption);
   }
   elFormCountryInput.appendChild(countryFragment);
@@ -127,6 +110,92 @@ function sortBooks(books, sortType) {
   } else if (sortType === 'year_new') {
     books.sort((a, b) => b.year - a.year);
   }
+}
+
+
+function findBook(titleRegex) {
+ return books.filter(book => {
+  const findedBooks = book.title.match(titleRegex) && (elFormLanguageInput.value === book.language || elFormLanguageInput.value === 'all') && (elFormCountryInput.value === book.country || elFormCountryInput.value === 'all') && (Number(elFormYearInput.value) >= book.year || elFormYearInput.value === '');
+  return findedBooks;
+ });
+}
+
+function bookFind (evt) {
+  evt.preventDefault();
+
+  const titleRegex = new RegExp (elFormNameInput.value.trim(), 'gi');
+  const foundBooks = findBook(titleRegex);
+
+  if (foundBooks.length > 0) {
+    sortBooks(foundBooks, elFormSortInput.value);
+    showBooks(foundBooks, titleRegex);
+  } else {
+    elBooksList.innerHTML = '<div class="col-12 text-center">Book not found</div>';
+  }
+}
+
+function showBookmarksList () {
+  elBookmarksList.innerHTML = '';
+  let elBookmarksFragment = document.createDocumentFragment();
+  for (const bookmark of books) {
+    const elNewBookmarksItem = elBookmarksTemplate.cloneNode(true);
+
+    elNewBookmarksItem.querySelector('.js-bookmarks-link').textContent = bookmark.title;
+    elNewBookmarksItem.querySelector('.js-bookmarks-link').href = bookmark.link;
+    elNewBookmarksItem.querySelector('.js-bookmarks-year').textContent = bookmark.year;
+    elNewBookmarksItem.querySelector('js-bookmarks-close').dataset.title = bookmark.title;
+
+    elBookmarksFragment.appendChild(elNewBookmarksItem);
+  }
+  elBookmarksList.appendChild(elBookmarksFragment);
+}
+
+elBookmarksModal.addEventListener('show.bs.modal', showBookmarksList);
+
+elBookmarksModal.addEventListener('click', (evt) => {
+  if (evt.target.matches('.js-bookmarks-close')) {
+    const bookmarkIndex = bookmarkList.findIndex(bookmark => bookmark.title === evt.target.dataset.title);
+    const elBookmark = elBooksList.querySelector('.book__btn');
+
+
+    bookmarkList.splice(bookmarkIndex, 1);
+    elBookmark.textContent = 'Bookmark';
+    elBookmark.classList.remove('bookmark-btn');
+
+
+    localStorage.setItem('bookmarkList', JSON.stringify(bookmarkList));
+    showBookmarksList();
+  }
+});
+
+function onBooksListInfoButtonClick(evt) {
+  if (evt.target.matches('.book__btn')) {
+    const elBookmarkButton = evt.target;
+
+    if (elBookmarkButton.matches('.bookmark-btn')) {
+      elBookmarkButton.textContent = 'Bookmark';
+      elBookmarkButton.classList.remove('bookmark-btn');
+
+      const elBookmarkIndex = bookmarkList.findIndex(book => book.title === elBookmarkButton.dataset.title);
+      bookmarkList.splice(bookmarkIndex, 1);
+    } else {
+      elBookmarkButton.textContent = 'Bookmarked';
+      elBookmarkButton.classList.add('bookmark-btn');
+
+      const newBookmark = books.find(book => book.title === elBookmarkButton.dataset.title);
+      bookmarkList.push(newBookmark);
+    }
+    localStorage.setItem('bookmarkList', JSON.stringify(bookmarkList));
+  }
+}
+
+
+if (elSearchForm) {
+  elSearchForm.addEventListener('submit', bookFind);
+}
+
+if (elBooksList) {
+  elBooksList.addEventListener('click', onBooksListInfoButtonClick);
 }
 
 getLanguages();
