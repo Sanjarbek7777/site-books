@@ -1,17 +1,16 @@
 var countries = [];
 var languages = [];
-var bookmarkList = [];
+const bookList = JSON.parse(localStorage.getItem('booklist')) || [];
+
 
 var elBooksList = document.querySelector('.books');
 var elBooksItemTemplate = document.querySelector('#books-item-template').content;
-var elBookmarksTemplate = document.querySelector('#bookmarks__template').content;
 
 
 // BOOKMARK
-var elBookmarksModal = document.querySelector('.bookmarks-modal');
-var elBookmarksList = elBookmarksModal.querySelector('.bookmarks__list');
-var elWatchlistFragment = document.createDocumentFragment();
-
+const elBookListModal = document.querySelector('.booklist-modal');
+const elBookListALL = elBookListModal.querySelector('.booklist-modal__list');
+const bookListFragment = document.createDocumentFragment();
 
 
 // FORM
@@ -43,10 +42,46 @@ function showBooks (books, titleRegex = '') {
     elNewBooksItem.querySelector('.book__link').href = book.link;
     elNewBooksItem.querySelector('.book__link').target = '_blank';
 
+    const elBookmarkBtn = elNewBooksItem.querySelector('.js-bookmark-button');
+    elBookmarkBtn.dataset.title = book.title;
+    const indexBookInBookList = bookList.findIndex(book => book.title === elBookmarkBtn.dataset.title);
+    if (indexBookInBookList > -1) {
+      elBookmarkBtn.classList.add('btn-secondary');
+      elBookmarkBtn.classList.remove('btn-outline-secondary');
+      elBookmarkBtn.textContent = 'Bookmarked ✔';
+    } else {
+      elBookmarkBtn.classList.remove('btn-secondary');
+      elBookmarkBtn.classList.add('btn-outline-secondary');
+      elBookmarkBtn.textContent = 'Bookmark';
+    }
+
     elBooksFragment.appendChild(elNewBooksItem);
   }
 
   elBooksList.appendChild(elBooksFragment);
+}
+
+function onBooksListInfoButtonClick(evt) {
+
+  if (evt.target.matches('.js-bookmark-button')) {
+    const elBookmarkBtn = evt.target;
+    const book = books.find(book => book.title === elBookmarkBtn.dataset.title);
+    const indexBookInBookList = bookList.findIndex(book => book.title === elBookmarkBtn.dataset.title);
+
+    if (indexBookInBookList === -1) {
+      bookList.push(book);
+      elBookmarkBtn.classList.add('btn-secondary');
+      elBookmarkBtn.classList.remove('btn-outline-secondary');
+      elBookmarkBtn.textContent = 'Bookmarked ✔';
+    } else {
+      bookList.splice(indexBookInBookList, 1);
+      elBookmarkBtn.classList.remove('btn-secondary');
+      elBookmarkBtn.classList.add('btn-outline-secondary');
+      elBookmarkBtn.textContent = 'Bookmark';
+    }
+
+    localStorage.setItem('booklist', JSON.stringify(bookList));
+  }
 }
 
 function getLanguages() {
@@ -134,60 +169,35 @@ function bookFind (evt) {
   }
 }
 
-function showBookmarksList () {
-  elBookmarksList.innerHTML = '';
-  let elBookmarksFragment = document.createDocumentFragment();
-  for (const bookmark of books) {
-    const elNewBookmarksItem = elBookmarksTemplate.cloneNode(true);
 
-    elNewBookmarksItem.querySelector('.js-bookmarks-link').textContent = bookmark.title;
-    elNewBookmarksItem.querySelector('.js-bookmarks-link').href = bookmark.link;
-    elNewBookmarksItem.querySelector('.js-bookmarks-year').textContent = bookmark.year;
-    elNewBookmarksItem.querySelector('js-bookmarks-close').dataset.title = bookmark.title;
+function showBooklist() {
+  elBookListALL.innerHTML = '';
 
-    elBookmarksFragment.appendChild(elNewBookmarksItem);
+  for (let bookItem of bookList) {
+    let newBookmark = `<li class="bookmark booklist-modal__item list-group-item d-flex align-items-center justify-content-between" data-unique-id="${bookItem.title}">
+    <h3 class="bookmark__title h5">${bookItem.title} (${bookItem.year})</h3>
+    <button class="bookmark__remove btn btn-danger btn-sm text-white" type="button" title="Remove from booklist" data-unique-id="${bookItem.title}">&#10006;</button>
+    </li>`;
+    elBookListALL.insertAdjacentHTML('beforeend', newBookmark)
   }
-  elBookmarksList.appendChild(elBookmarksFragment);
 }
 
-elBookmarksModal.addEventListener('show.bs.modal', showBookmarksList);
+elBookListModal.addEventListener('show.bs.modal', showBooklist);
 
-elBookmarksModal.addEventListener('click', (evt) => {
-  if (evt.target.matches('.js-bookmarks-close')) {
-    const bookmarkIndex = bookmarkList.findIndex(bookmark => bookmark.title === evt.target.dataset.title);
-    const elBookmark = elBooksList.querySelector('.book__btn');
+elBookListModal.addEventListener('click', (evt) => {
+  if (evt.target.matches('.bookmark__remove')) {
+    const bookmarkIndex = bookList.findIndex(bookmark => bookmark.title === evt.target.dataset.uniqueId);
+    const removedBookmark = bookList.splice(bookmarkIndex, 1)[0];
 
-
-    bookmarkList.splice(bookmarkIndex, 1);
+    const elBookmark = elBooksList.querySelector(`.js-bookmark-button[data-title="${removedBookmark.title}"]`);
+    elBookmark.classList.remove('btn-secondary');
+    elBookmark.classList.add('btn-outline-secondary');
     elBookmark.textContent = 'Bookmark';
-    elBookmark.classList.remove('bookmark-btn');
 
-
-    localStorage.setItem('bookmarkList', JSON.stringify(bookmarkList));
-    showBookmarksList();
+    localStorage.setItem('booklist', JSON.stringify(bookList));
+    showBooklist();
   }
 });
-
-function onBooksListInfoButtonClick(evt) {
-  if (evt.target.matches('.book__btn')) {
-    const elBookmarkButton = evt.target;
-
-    if (elBookmarkButton.matches('.bookmark-btn')) {
-      elBookmarkButton.textContent = 'Bookmark';
-      elBookmarkButton.classList.remove('bookmark-btn');
-
-      const elBookmarkIndex = bookmarkList.findIndex(book => book.title === elBookmarkButton.dataset.title);
-      bookmarkList.splice(bookmarkIndex, 1);
-    } else {
-      elBookmarkButton.textContent = 'Bookmarked';
-      elBookmarkButton.classList.add('bookmark-btn');
-
-      const newBookmark = books.find(book => book.title === elBookmarkButton.dataset.title);
-      bookmarkList.push(newBookmark);
-    }
-    localStorage.setItem('bookmarkList', JSON.stringify(bookmarkList));
-  }
-}
 
 
 if (elSearchForm) {

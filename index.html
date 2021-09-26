@@ -16,7 +16,7 @@
           <img src="./img/menu_book_black.svg.svg" alt="books" width="40" height="40">
           <h1 class="text-center p-2 text-white m-0">Online Books</h1>
         </div>
-        <button class="btn btn-info me-3 p-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button class="btn btn-info me-3 p-2" type="button" data-bs-toggle="modal" data-bs-target="#modal-book-list">
           <img src="./img/bookmarks_black.svg" alt="show bookmarks btn" width="30" height="30">
         </button>
       </div>
@@ -62,22 +62,19 @@
 
 
     <!-- MODALS -->
-<div class="bookmarks-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Bookmarked books</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="bookmarks__list list-unstyled"></ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+   <!-- BOOK-list-modal -->
+   <div class="booklist-modal modal fade" id="modal-book-list">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h3 class="book-list-title text-center">Book list</h3>
+          <ul class="booklist-modal__list list-group">
+
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
     <!-- TEMPLATES -->
@@ -112,17 +109,9 @@
           <a class="btn btn-outline-info book__link d-flex align-items-center" href="#">Wikipedia
             <img class="ms-1 mt-1" src="./img/wikipedia-icon.png" alt="" width="15" height="15">
           </a>
-          <button class="js-bookmark-button btn btn-outline-success book__btn" type="submit">Bookmark</button>
+          <button class="js-bookmark-button btn btn-outline-dark book__btn" type="submit">Bookmark</button>
         </div>
       </div>
-  </template>
-
-  <template id="bookmarks__template">
-    <div class="bookmarks__item item__bookmarks mb-2 d-flex align-items-center justify-content-center">
-      <a class="js-bookmarks-link text-decoration-none text-dark" href="#"></a>
-      <p class="js-bookmarks-year m-0 text-truncate me-2"></p>
-      <button class="js-bookmarks-close btn btn-danger">x</button>
-    </div>
   </template>
 
   <script src="js/bootstrap5.bundle.min.js"></script>

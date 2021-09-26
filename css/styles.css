@@ -39,19 +39,3 @@
 .search-form {
   margin-top: 30px;
 }
-
-/* .js-bookmark-button::after {
-  content: '';
-  background-image: url(../images/bookmark-no-check.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-} */
-
-/* .bookmark-btn.js-bookmark-button::after {
-  content: '';
-  background-image: url(../images/bookmark-check.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-} */
